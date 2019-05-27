@@ -25,7 +25,7 @@
 				</div>
 				<div class="list-item-content"> {{ post.body }} </div>
 				<div class="blog-grid-meta">
-					<span class="blog-grid-date"> {{ post.created_at }}</span>
+					<span class="blog-grid-date"> {{ post.created_at|date:'M d, Y' }}</span>
 					<span class="blog-grid-author">by <a href="#">{{ post.created_by.full_name }}</a></span>
 				</div>
 			</div>
@@ -55,9 +55,9 @@
 				{% csrf_token %}
 				{{ form }}
 				<div class="helper center">
-					<a class="button rounded large blue" id="submit-btn">
+					<button class="button rounded large blue modal-alt-button js-close-modal-button">
 						<span class="modal-alt-button-text">submit post</span>
-					</a>
+					</button>
 				</div>
 			</form>
 		</div>
@@ -69,18 +69,8 @@
 
 {% block javascript %}
   <script>
-  	$("#submit-btn").click(function (e) {
-		$.ajax({
-			method: 'POST',
-			url: $('#post-form').action,
-			data: $('#post-form').serialize(),
-			success: function(response) {
-				console.log(response);
-			},
-			error: function(response) {
-				console.log(response);
-			}
-		});
-	});
+	$(".js-close-modal-button").click(function () {
+	  $('#post-form').submit();
+  });
   </script>
 {% endblock %}
